@@ -3,6 +3,7 @@ rules = document.getElementById('rules')
 closeBtn = document.getElementById('close-btn')
 canvas = document.getElementById('canvas')
 ctx = canvas.getContext('2d')
+startBtn = document.getElementById('start-btn')
 
 score = 0
 
@@ -149,7 +150,7 @@ function moveBall() {
     }
 
     //wall collision (right)
-    if (ball.x +ball.size > canvas.width) {
+    if (ball.x + ball.size > canvas.width) {
         ball.dx = -1 * ball.dx
     }
 
@@ -230,3 +231,19 @@ rulesBtn.addEventListener('click', () => {
 closeBtn.addEventListener('click', () => {
     rules.classList.remove('show')
 })
+
+startBtn.addEventListener("click", Start);
+
+function begin() {
+    console.log("It has begun...")
+    startBtn.addEventListener('click', Start)
+    startBtn.removeEventListener('click', Stop)
+    startBtn.value = "Stop";
+}
+
+function end() {
+    console.log("It has ended...")
+    startBtn.removeEventListener('click', Stop)
+    startBtn.addEventListener('click', Start)
+    startBtn.value = "Start";
+}
