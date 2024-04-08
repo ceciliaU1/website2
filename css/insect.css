@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap');
 
 * {
     box-sizing: border-box;
@@ -7,5 +7,5 @@
 body {
     background-color: #516dff;
     color: #ffffff;
-    
+
 }
