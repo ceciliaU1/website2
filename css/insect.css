@@ -101,7 +101,7 @@ h1 {
     right: 20px;
 }
 
-/*.message {
+.message {
     line-height: 1.7;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5);
@@ -112,11 +112,11 @@ h1 {
     top: 0;
     left: 50%;
     transform: translate(-50%, 150%);
-    transition: transform 0.4s ease-in;
+    /* transition: transform 0.4s ease-in; */
 }
 
 
-.message.visible {
+/*.message.visible {
     transform: translate(-50%, 150%);
 }
 
