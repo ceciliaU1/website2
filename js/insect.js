@@ -75,7 +75,9 @@ function increaseScore() {
     if (score > 19) {
         message.classList.add('visible')
     }
-    message.classList.remove('visible')
+    if (score > 20) {
+        message.classList.remove('visible')
+    }
     scoreEl.innerHTML = `Score: ${score}`
 }
 
