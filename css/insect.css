@@ -121,7 +121,7 @@ h1 {
 }
 
 
-/*.insect {
+.insect {
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -142,4 +142,4 @@ h1 {
 .insect img {
     width: 100px;
     height: 100px;
-} */
+}
