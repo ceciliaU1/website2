@@ -116,12 +116,12 @@ h1 {
 }
 
 
-/*.message.visible {
+.message.visible {
     transform: translate(-50%, 150%);
 }
 
 
-.insect {
+/*.insect {
     cursor: pointer;
     display: flex;
     align-items: center;
