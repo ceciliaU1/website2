@@ -15,7 +15,14 @@ body {
     overflow: hidden;
 }
 
+h1 {
+    margin: 20px 0 0;
+}
 
+.game-container {
+    padding: 20px 30px;
+    position: relative;
+}
 
 .figure-container {
     fill: transparent;
