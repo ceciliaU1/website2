@@ -8,8 +8,9 @@ const message = document.getElementById('message')
 let seconds = 0
 let score = 0
 let selected_insect = {}
+let timerInterval
+let gameActive = true
 
-console.log(screens)
 start_btn.addEventListener('click', () => {
     screens[0].classList.add('up')
 })
@@ -22,13 +23,12 @@ choose_insect_btns.forEach(btn => {
         screens[1].classList.add('up')
         selected_insect = {src, alt}
         setTimeout(createInsect, 1000)
-
         startGame()
     })
 })
 
 function startGame() {
-    setInterval(increaseTime, 1000)
+    timerInterval = setInterval(increaseTime, 1000)
 }
 
 function increaseTime() {
@@ -42,11 +42,13 @@ function increaseTime() {
     }
     timeEl.innerHTML = `Time: ${m}:${s}`
     seconds++
+    gameOver()
 }
 
 
 
 function createInsect() {
+    if (!gameActive) return
     const insect = document.createElement('div')
     insect.classList.add('insect')
     const { x, y } = getRandomLocation()
@@ -59,6 +61,7 @@ function createInsect() {
 }
 
 function catchInsect() {
+    if (!gameActive) return
     increaseScore()
     this.classList.add('caught')
     setTimeout(() => this.remove(), 2000)
@@ -72,15 +75,24 @@ function addInsects() {
 
 function increaseScore() {
     score++
-    if (score > 19) {
-        message.classList.add('visible')
-    }
-    if (score > 20) {
-        message.classList.remove('visible')
-    }
     scoreEl.innerHTML = `Score: ${score}`
+    if (seconds == 30 && score == 60) {
+        clearInterval(timerInterval)
+        messageShow('Winner winner chicken dinner...')
+    }
 }
 
+function gameOver() {
+    if (seconds >= 30 && score < 60) {
+        clearInterval(timerInterval)
+        stopGame('What a loser >:)')
+    }
+}
+
+function messageShow(text) {
+    message.innerHTML = text
+    message.classList.add('visible')
+}
 
 function getRandomLocation() {
     const width = window.innerWidth
@@ -88,4 +100,10 @@ function getRandomLocation() {
     const x = Math.random() * (width - 200) + 100
     const y = Math.random() * (height - 200) + 100
     return { x, y }
+}
+
+function stopGame(text) {
+    clearInterval(timerInterval)
+    gameActive = false
+    messageShow(text)
 }

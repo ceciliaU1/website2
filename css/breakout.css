@@ -17,7 +17,7 @@ canvas {
     background: #f0f0f0;
     display: block;
     border-radius: 5px;
-    
+
 }
 
 h1 {
@@ -64,6 +64,12 @@ h1 {
 
 .rules.show {
     transform: translateX(0);
+}
+
+.website-btn {
+    position: absolute;
+    top: 30px;
+    left: 150px;
 }
 
 .start-btn {

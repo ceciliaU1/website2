@@ -1,16 +1,16 @@
 rulesBtn = document.getElementById('rules-btn')
+startBtn = document.getElementById('start-btn')
 rules = document.getElementById('rules')
 closeBtn = document.getElementById('close-btn')
 canvas = document.getElementById('canvas')
 ctx = canvas.getContext('2d')
-startBtn = document.getElementById('start-btn')
 
-score = 0
+score = 0;
 
 brickRowCount = 9
 brickColumnCount = 5
 
-console.log("Connected")
+// console.log("Connected")
 
 // Create ball properties
 ball = {
@@ -43,15 +43,19 @@ brickInfo = {
 }
 
 // Create bricks
-bricks = []
-for (let i = 0; i < brickRowCount; i++) {
-    bricks[i] = []
-    for (let j = 0; j < brickColumnCount; j++) {
-        const x = i * (brickInfo.w + brickInfo.padding) + brickInfo.offsetX
-        const y = j * (brickInfo.h + brickInfo.padding) + brickInfo.offsetY
-        bricks[i][j] = {x, y, ...brickInfo}
+function createBricks() {
+    bricks = []
+    for (let i = 0; i < brickRowCount; i++) {
+        bricks[i] = []
+        for (let j = 0; j < brickColumnCount; j++) {
+            const x = i * (brickInfo.w + brickInfo.padding) + brickInfo.offsetX
+            const y = j * (brickInfo.h + brickInfo.padding) + brickInfo.offsetY
+            bricks[i][j] = {x, y, ...brickInfo}
+        }
     }
 }
+
+createBricks()
 
 // Draw ball on canvas
 function drawBall() {
@@ -91,7 +95,7 @@ function drawBricks() {
     })
 }
 
-console.log(bricks)
+// console.log(bricks)
 
 // Draw everything
 function draw() {
@@ -156,9 +160,11 @@ function moveBall() {
 
     //wall collision (bottom)
     if (ball.y + ball.size > canvas.height) {
-        ball.dy = -1 * ball.dy
-        showAllBricks()
-        score = 0
+        // ball.dy = -1 * ball.dy
+        // showAllBricks()
+        // score = 0
+        stopGame();
+        return;
     }
 
     //wall collision (left)
@@ -199,8 +205,9 @@ function increaseScore() {
     score++ //score = score +1
 
     if (score == brickRowCount * brickColumnCount) {
-        score == 0
-        showAllBricks()
+        // score == 0
+        // showAllBricks()
+        stopGame();
     }
 }
 
@@ -212,12 +219,13 @@ function showAllBricks() {
     })
 }
 
+let gameInterval
+
 // Update canvas drawing and animation
 function update() {
     moveBall()
     movePaddle()
     draw()
-    requestAnimationFrame(update)
 }
 
 update()
@@ -232,18 +240,23 @@ closeBtn.addEventListener('click', () => {
     rules.classList.remove('show')
 })
 
-startBtn.addEventListener("click", Start);
 
-function begin() {
-    console.log("It has begun...")
-    startBtn.addEventListener('click', Start)
-    startBtn.removeEventListener('click', Stop)
-    startBtn.value = "Stop";
+function startGame() {
+    score = 0;
+    ball.x = canvas.width / 2
+    ball.y = canvas.height / 2
+    ball.dx = 4
+    ball.dy = -4
+    paddle.x = canvas.width / 2 - paddle.w / 2
+    createBricks()
+    gameInterval = setInterval(update, 20)
 }
 
-function end() {
-    console.log("It has ended...")
-    startBtn.removeEventListener('click', Stop)
-    startBtn.addEventListener('click', Start)
-    startBtn.value = "Start";
+function stopGame() {
+    clearInterval(gameInterval)
 }
+
+startBtn.addEventListener('click', () => {
+    stopGame();
+    startGame();
+});
